@@ -1,0 +1,209 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Pyramid Challenge</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--bg:#f6f6f4;--card:#fff;--fg:#1b1b1b;--mute:#5f5f5f;--line:#d4d4d0;--male:#2b2b2b;--female:#9a9a9a;--accent:#2f5d8a;--accent-fg:#fff;--ok:#1d6b3a;--okbg:#e4f2e8;--bad:#a02b2b;--badbg:#f7e4e4;--mid:#7a5a10;--midbg:#f6edd5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151515;--card:#1f1f1f;--fg:#eeeeec;--mute:#a4a4a0;--line:#3a3a38;--male:#e6e6e3;--female:#7d7d7a;--accent:#8fb8e3;--accent-fg:#101820;--ok:#7fd199;--okbg:#17301f;--bad:#f09a9a;--badbg:#341a1a;--mid:#e7c76a;--midbg:#332a10;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#151515;--card:#1f1f1f;--fg:#eeeeec;--mute:#a4a4a0;--line:#3a3a38;--male:#e6e6e3;--female:#7d7d7a;--accent:#8fb8e3;--accent-fg:#101820;--ok:#7fd199;--okbg:#17301f;--bad:#f09a9a;--badbg:#341a1a;--mid:#e7c76a;--midbg:#332a10;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.45 "Atkinson Hyperlegible",system-ui,-apple-system,Segoe UI,Arial,sans-serif;margin:0;padding-block:16px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#app{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+h1{font-size:2rem;line-height:1.1;margin:0;text-wrap:balance}
+h2{font-size:1.25rem;margin:0;text-wrap:balance}
+p{margin:0}
+.mute{color:var(--mute)}
+.small{font-size:.875rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.9rem;color:var(--mute)}
+.top b{color:var(--fg)}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{background:var(--accent);color:var(--accent-fg);border:0;border-radius:10px;padding:12px 18px;font-weight:700;min-height:46px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+.link{background:none;border:0;color:var(--accent);padding:6px 0;text-decoration:underline;font-size:.9rem}
+.modes{display:grid;gap:12px}
+.mode{text-align:left;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:4px}
+.mode:hover,.mode:focus-visible{border-color:var(--accent)}
+.mode b{font-size:1.15rem}
+.q{display:flex;flex-direction:column;gap:6px;border:0;padding:0;margin:0;min-width:0}
+.q legend{font-weight:700;padding:0;margin-bottom:6px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;min-height:42px}
+.opt[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.opt.right{background:var(--okbg);border-color:var(--ok);color:var(--ok);font-weight:700}
+.opt.wrong{background:var(--badbg);border-color:var(--bad);color:var(--bad);text-decoration:line-through}
+.opt:disabled{cursor:default}
+.fb{font-size:.875rem;margin-top:2px}
+.fb.ok{color:var(--ok)}.fb.no{color:var(--bad)}
+.qs{display:flex;flex-direction:column;gap:16px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-size:.875rem;background:var(--bg)}
+.chip b{font-weight:700}
+.pol{display:grid;gap:8px}
+.pc{text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.pc[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
+.pc b{font-size:1rem}
+.pc span{font-size:.875rem;color:var(--mute)}
+.res{display:flex;flex-direction:column;gap:8px}
+.r{border-radius:10px;padding:10px 12px;border:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
+.r.g2{background:var(--okbg);border-color:var(--ok)}
+.r.g1{background:var(--midbg);border-color:var(--mid)}
+.r.g0{background:var(--badbg);border-color:var(--bad)}
+.r .tag{font-size:.8rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.r.g2 .tag{color:var(--ok)}.r.g1 .tag{color:var(--mid)}.r.g0 .tag{color:var(--bad)}
+.r .pick{font-size:.8rem;font-weight:700}
+.big{font-size:3rem;font-weight:700;line-height:1}
+svg{display:block;width:100%;height:auto}
+svg text{fill:var(--mute);font-family:inherit}
+.bm{fill:var(--male)}.bf{fill:var(--female)}
+.ax{stroke:var(--line);stroke-width:1}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+summary{cursor:pointer;font-weight:700}
+details ul{margin:8px 0 0;padding-left:1.2rem;display:flex;flex-direction:column;gap:4px}
+.foot{font-size:.8rem;color:var(--mute)}
+.theme{align-self:flex-end}
+</style>
+<div id="app"></div>
+<script>
+const DATA={"Nigeria":{"pop":235,"cbr":36.0,"cdr":10.0,"tfr":4.5,"e0":55,"M":[7.7,7.1,6.4,5.0,4.4,3.8,3.3,2.8,2.4,2.0,1.7,1.4,1.1,0.6,0.4,0.3,0.2],"F":[7.6,6.8,6.1,4.7,4.2,3.7,3.2,2.8,2.4,2.0,1.7,1.4,1.2,0.6,0.5,0.3,0.2]},"Ghana":{"pop":35.5,"cbr":28.0,"cdr":7.0,"tfr":3.6,"e0":66,"M":[6.8,6.1,5.8,4.9,4.4,4.0,3.5,3.1,2.7,2.4,2.0,1.7,1.4,0.5,0.4,0.3,0.3],"F":[6.2,5.8,5.5,4.7,4.2,3.8,3.5,3.1,2.8,2.5,2.2,1.9,1.6,0.6,0.5,0.4,0.4]},"Egypt":{"pop":118.0,"cbr":20.0,"cdr":5.8,"tfr":2.7,"e0":72,"M":[5.5,5.6,5.8,4.7,4.3,3.9,3.5,3.1,2.8,2.5,2.2,1.9,1.6,0.7,0.6,0.4,0.6],"F":[5.2,5.4,5.5,4.5,4.1,3.8,3.5,3.2,2.9,2.6,2.4,2.1,1.9,0.9,0.8,0.6,0.9]},"Canada":{"pop":41.6,"cbr":9.5,"cdr":8.0,"tfr":1.3,"e0":82.5,"M":[2.4,2.6,2.7,3.7,3.6,3.6,3.5,3.4,3.3,3.1,2.9,2.7,2.5,1.9,1.7,1.4,2.4],"F":[2.3,2.4,2.6,3.5,3.5,3.5,3.5,3.4,3.4,3.4,3.3,3.2,3.1,2.6,2.5,2.1,4.3]},"Japan":{"pop":123.0,"cbr":6.5,"cdr":12.0,"tfr":1.2,"e0":85,"M":[1.6,1.9,2.1,2.3,2.5,2.7,2.9,3.0,3.2,3.2,3.3,2.9,2.7,2.7,2.4,2.4,3.7],"F":[1.6,1.8,2.0,2.2,2.4,2.6,2.9,3.1,3.3,3.5,3.8,3.5,3.4,3.7,3.6,4.0,7.1]},"Italy":{"pop":58.9,"cbr":6.5,"cdr":11.5,"tfr":1.2,"e0":83.5,"M":[1.8,2.1,2.5,2.5,2.7,2.8,2.9,3.1,3.2,3.3,3.3,3.3,3.3,2.3,2.1,1.7,3.3],"F":[1.7,2.0,2.3,2.4,2.6,2.7,2.9,3.1,3.3,3.6,3.8,4.0,4.2,3.1,3.1,2.8,6.2]},"China":{"pop":1405,"cbr":6.4,"cdr":7.9,"tfr":1.0,"e0":78,"M":[2.4,2.8,3.3,2.5,2.7,3.0,3.2,3.4,3.6,3.7,4.0,3.9,3.0,1.6,1.5,1.2,2.0],"F":[2.3,2.7,3.1,2.4,2.6,2.9,3.2,3.5,3.7,3.9,4.4,4.5,3.7,2.1,2.0,1.8,3.4]},"South Korea":{"pop":51.7,"cbr":5.5,"cdr":7.2,"tfr":0.75,"e0":84,"M":[1.3,1.7,2.4,2.3,2.6,2.8,3.0,3.3,3.6,3.7,4.1,4.1,3.6,1.9,1.7,1.4,2.8],"F":[1.2,1.7,2.2,2.2,2.5,2.7,3.0,3.4,3.8,4.1,4.7,4.9,4.6,2.6,2.6,2.3,5.2]},"Niger":{"pop":27,"cbr":44,"cdr":8.5,"tfr":6.0,"e0":61,"M":[9.7,8.5,7.5,4.5,3.9,3.4,2.9,2.4,2.0,1.7,1.4,1.2,0.7,0.4,0.3,0.1,0.1],"F":[9.1,8.1,7.2,4.3,3.7,3.2,2.8,2.4,2.1,1.8,1.5,1.2,0.8,0.5,0.3,0.2,0.1]}};
+const AGES=["0–4","5–9","10–14","15–19","20–24","25–29","30–34","35–39","40–44","45–49","50–54","55–59","60–64","65–69","70–74","75–79","80+"];
+const META={Niger:{s:2,g:"y"},Nigeria:{s:2,g:"y"},Ghana:{s:3,g:"y"},Egypt:{s:3,g:"y"},Canada:{s:4,g:"a"},China:{s:5,g:"a"},Japan:{s:5,g:"a"},Italy:{s:5,g:"a"},"South Korea":{s:5,g:"a"}};
+const C=Object.keys(META).map(n=>{const d=DATA[n],m=META[n];const sum=(a,i,j)=>a.slice(i,j).reduce((x,y)=>x+y,0);
+ return {name:n,s:m.s,g:m.g,...d,u15:+(sum(d.M,0,3)+sum(d.F,0,3)).toFixed(1),s65:+(sum(d.M,13)+sum(d.F,13)).toFixed(1),ni:(d.cbr-d.cdr)/10}});
+const $=s=>document.querySelector(s),app=$("#app");
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+function pyramid(c){
+ const W=360,rh=15,top=22,cx=180,gap=17,k=145/11,H=top+17*rh+26;
+ let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Population pyramid, males on the left and females on the right, as a percent of the total population">`;
+ s+=`<text x="${cx-gap-4}" y="12" text-anchor="end" font-size="11" font-weight="700">Male</text><text x="${cx+gap+4}" y="12" font-size="11" font-weight="700">Female</text>`;
+ for(let i=0;i<17;i++){const y=top+(16-i)*rh,m=c.M[i]*k,f=c.F[i]*k;
+  s+=`<rect class="bm" x="${cx-gap-m}" y="${y+1}" width="${m}" height="${rh-2}"/><rect class="bf" x="${cx+gap}" y="${y+1}" width="${f}" height="${rh-2}"/><text x="${cx}" y="${y+rh-3.5}" text-anchor="middle" font-size="9.5">${AGES[i]}</text>`}
+ const by=top+17*rh+3;
+ for(const t of [0,5,10]){const xl=cx-gap-t*k,xr=cx+gap+t*k;
+  s+=`<line class="ax" x1="${xl}" x2="${xl}" y1="${top}" y2="${by}"/><line class="ax" x1="${xr}" x2="${xr}" y1="${top}" y2="${by}"/><text x="${xl}" y="${by+12}" text-anchor="middle" font-size="10">${t}%</text><text x="${xr}" y="${by+12}" text-anchor="middle" font-size="10">${t}%</text>`}
+ return s+`</svg>`}
+
+/* ---------- theme ---------- */
+function toggleTheme(){const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark"}
+const themeBtn=`<button class="link theme" onclick="toggleTheme()">Light / dark</button>`;
+
+/* ---------- menu ---------- */
+function menu(){
+ app.innerHTML=`${themeBtn}
+ <div><h1>Pyramid Challenge</h1><p class="mute">Human Geography 12 · World Population review</p></div>
+ <div class="modes">
+  <button class="mode" id="m1"><b>1 · Match-up</b><span class="mute">Study a mystery pyramid, then match its stage, shape, growth and more. 6 pyramids.</span></button>
+  <button class="mode" id="m2"><b>2 · You're the Minister</b><span class="mute">Meet a country's population problem and pick two policies. 5 countries.</span></button>
+ </div>
+ <details><summary>Quick cheat sheet</summary><ul>
+  <li><b>Stage 2:</b> birth rate high, death rate falling. Fast growth.</li>
+  <li><b>Stage 3:</b> birth rate falling toward death rate. Growth slowing.</li>
+  <li><b>Stage 4:</b> birth and death rates both low. Slow growth.</li>
+  <li><b>Stage 5:</b> birth rate below death rate. Population shrinking.</li>
+  <li><b>Stages 1–2</b> LEDC · <b>Stage 3</b> developing · <b>Stages 4–5</b> MEDC</li>
+  <li><b>Replacement fertility:</b> about 2.1 children per woman.</li></ul></details>
+ <p class="foot">Pyramids are modelled teaching estimates built from approximate 2026 figures, not official census data. Play on your own; nothing is saved.</p>`;
+ $("#m1").onclick=mode1;$("#m2").onclick=mode2}
+
+/* ---------- MODE 1 ---------- */
+const Q1=[
+ {k:"stage",t:"Which DTM stage?",o:["Stage 2","Stage 3","Stage 4","Stage 5"],a:c=>"Stage "+c.s},
+ {k:"shape",t:"What is the age structure?",o:["Youthful (wide base)","Ageing (narrow base)"],a:c=>c.g==="y"?"Youthful (wide base)":"Ageing (narrow base)"},
+ {k:"grow",t:"What is the population doing?",o:["Growing fast","Growing slowly","Shrinking"],a:c=>c.ni>=2?"Growing fast":c.ni>0?"Growing slowly":"Shrinking"},
+ {k:"tfr",t:"Children per woman?",o:["Above 4","Between 2.1 and 4","Below 2.1"],a:c=>c.tfr>4?"Above 4":c.tfr>=2.1?"Between 2.1 and 4":"Below 2.1"},
+ {k:"dev",t:"Level of development?",o:["LEDC","Developing","MEDC"],a:c=>c.s===2?"LEDC":c.s===3?"Developing":"MEDC"}];
+const WHY={2:"Birth rate stays high while the death rate falls, so the population grows fast.",3:"The birth rate is falling toward the death rate, so growth is slowing.",4:"Birth and death rates are both low, so growth is slow.",5:"The birth rate is below the death rate, so the population is shrinking."};
+let G;
+function mode1(){G={list:shuffle(C).slice(0,6),i:0,score:0};round1()}
+function round1(){
+ const c=G.list[G.i];G.ans={};G.done=false;
+ app.innerHTML=`<div class="top"><button class="link" id="back">← Menu</button><span>Pyramid <b>${G.i+1}</b>/6 · Score <b>${G.score}</b></span></div>
+ <div class="card"><h2 id="ttl">Mystery country</h2><p class="small mute" id="sub">Study the shape, then answer all five.</p>${pyramid(c)}</div>
+ <div class="card qs" id="qs">${Q1.map(q=>`<fieldset class="q" data-k="${q.k}"><legend>${q.t}</legend><div class="opts">${q.o.map(o=>`<button class="opt" aria-pressed="false" data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div><p class="fb" aria-live="polite"></p></fieldset>`).join("")}</div>
+ <div id="reveal" aria-live="polite"></div>
+ <button class="btn" id="go" disabled>Check answers</button>`;
+ $("#back").onclick=menu;
+ document.querySelectorAll(".q").forEach(f=>f.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{if(G.done)return;
+  f.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");G.ans[f.dataset.k]=b.dataset.v;
+  $("#go").disabled=Object.keys(G.ans).length<Q1.length}));
+ $("#go").onclick=()=>check1(c)}
+function check1(c){
+ G.done=true;let pts=0;
+ document.querySelectorAll(".q").forEach(f=>{const q=Q1.find(x=>x.k===f.dataset.k),right=q.a(c),mine=G.ans[q.k],fb=f.querySelector(".fb");
+  f.querySelectorAll(".opt").forEach(b=>{b.disabled=true;b.setAttribute("aria-pressed","false");if(b.dataset.v===right)b.classList.add("right");else if(b.dataset.v===mine)b.classList.add("wrong")});
+  if(mine===right){pts++;fb.className="fb ok";fb.textContent="✓ Correct"}else{fb.className="fb no";fb.textContent="✗ Answer: "+right}});
+ G.score+=pts;
+ $("#ttl").textContent=c.name;$("#sub").textContent=`${pts}/5 this round`;
+ $("#reveal").innerHTML=`<div class="card"><p><b>${c.name}</b> · Stage ${c.s}. ${WHY[c.s]}</p><div class="chips" style="margin-top:8px"><span class="chip">Birth <b>${c.cbr}</b>/1000</span><span class="chip">Death <b>${c.cdr}</b>/1000</span><span class="chip">Under 15 <b>${c.u15}%</b></span><span class="chip">65+ <b>${c.s65}%</b></span><span class="chip">Life exp. <b>${c.e0}</b></span></div></div>`;
+ const last=G.i===G.list.length-1,go=$("#go");go.disabled=false;go.textContent=last?"See my score":"Next pyramid";
+ go.onclick=()=>{if(last)end(G.score,30,"match-up");else{G.i++;round1();scrollTo(0,0)}};
+ $("#reveal").scrollIntoView({block:"nearest"})}
+
+/* ---------- MODE 2 ---------- */
+const POL=[
+ {k:"fam",n:"Family planning + girls' education",d:"Anti-natalist: lower the birth rate"},
+ {k:"sch",n:"Build schools + create youth jobs",d:"Invest in the young workforce"},
+ {k:"baby",n:"Baby bonus + free childcare",d:"Pro-natalist: encourage births"},
+ {k:"imm",n:"Welcome more immigrants",d:"Add working-age people now"},
+ {k:"ret",n:"Raise the retirement age",d:"Keep people working longer"},
+ {k:"care",n:"Build senior care + pension spending",d:"Support older people"}];
+const SC={
+ y:{fam:[2,"Fewer births ease pressure on schools and jobs. Educating girls is one of the strongest ways to lower fertility."],
+    sch:[2,"A huge youth group needs classrooms and jobs. Done well, a big working-age group can power growth."],
+    baby:[0,"More births would widen the base even more."],
+    imm:[0,"Lots of young people already need jobs. More workers is not the problem."],
+    ret:[0,"Few seniors, so there is little pension pressure to fix."],
+    care:[1,"This will matter later, but seniors are a small share today and money is needed for youth first."]},
+ a:{imm:[2,"Young adults arrive now, join the workforce and tax base, and often have children."],
+    ret:[2,"People work and pay taxes longer, which eases pension costs."],
+    baby:[1,"It can help, but gains are small and slow. A new baby takes about 20 years to join the workforce."],
+    care:[1,"Needed, but it costs money and does not fix a shrinking workforce."],
+    fam:[0,"Fewer births would make the problem worse."],
+    sch:[0,"There are fewer children than before, so schools are not the pressing need."]}};
+const TRADE={y:"Trade-off: even if fertility falls, population momentum keeps the population growing for decades, because so many young people are about to become parents.",a:"Trade-off: immigration works fast but is politically debated. Birth-rate policies are slow. Retirement-age changes can be unpopular."};
+function mode2(){
+ const y=shuffle(C.filter(c=>c.g==="y")),a=shuffle(C.filter(c=>c.g==="a"));
+ const list=[y[0],y[1],a[0],a[1],shuffle([y[2],y[3],a[2],a[3],a[4]])[0]];
+ G={list:shuffle(list),i:0,score:0};round2()}
+function round2(){
+ const c=G.list[G.i];G.pick=new Set();G.done=false;
+ const prob=c.g==="y"?`<b>${c.u15}%</b> of people are under 15, and only <b>${c.s65}%</b> are 65+.`:`About <b>1 in ${Math.round(100/c.s65)}</b> people is 65+, and only <b>${c.u15}%</b> are under 15.`;
+ app.innerHTML=`<div class="top"><button class="link" id="back">← Menu</button><span>Country <b>${G.i+1}</b>/5 · Score <b>${G.score}</b></span></div>
+ <div class="card"><h2>Minister of ${esc(c.name)}</h2><p style="margin:4px 0 8px">${prob}</p>${pyramid(c)}
+ <div class="chips" style="margin-top:8px"><span class="chip">Birth <b>${c.cbr}</b>/1000</span><span class="chip">Death <b>${c.cdr}</b>/1000</span><span class="chip">Children/woman <b>${c.tfr}</b></span><span class="chip">Life exp. <b>${c.e0}</b></span></div></div>
+ <div><h2>Pick TWO policies</h2><p class="small mute">Choose what fits this pyramid best.</p></div>
+ <div class="pol" id="pol">${shuffle(POL).map(p=>`<button class="pc" aria-pressed="false" data-k="${p.k}"><b>${p.n}</b><span>${p.d}</span></button>`).join("")}</div>
+ <div id="reveal" aria-live="polite"></div>
+ <button class="btn" id="go" disabled>Enact policies</button>`;
+ $("#back").onclick=menu;
+ document.querySelectorAll(".pc").forEach(b=>b.onclick=()=>{if(G.done)return;const k=b.dataset.k;
+  if(G.pick.has(k)){G.pick.delete(k);b.setAttribute("aria-pressed","false")}
+  else if(G.pick.size<2){G.pick.add(k);b.setAttribute("aria-pressed","true")}
+  $("#go").disabled=G.pick.size!==2});
+ $("#go").onclick=()=>check2(c)}
+function check2(c){
+ G.done=true;const S=SC[c.g];let pts=0;G.pick.forEach(k=>pts+=S[k][0]);G.score+=pts;
+ const lab=["Poor fit","Partly helps","Great fit"];
+ const order=POL.map(p=>p.k).sort((a,b)=>S[b][0]-S[a][0]);
+ $("#pol").style.display="none";
+ $("#reveal").innerHTML=`<div class="card res"><h2>${pts}/4 points</h2>${order.map(k=>{const p=POL.find(x=>x.k===k),[v,w]=S[k];
+  return `<div class="r g${v}"><span class="tag">${lab[v]}${G.pick.has(k)?` <span class="pick">· YOUR PICK</span>`:""}</span><b>${p.n}</b><span class="small">${w}</span></div>`}).join("")}
+  <p class="small mute">${TRADE[c.g]}</p></div>`;
+ const last=G.i===G.list.length-1,go=$("#go");go.textContent=last?"See my score":"Next country";
+ go.onclick=()=>{if(last)end(G.score,20,"minister");else{G.i++;round2();scrollTo(0,0)}};
+ $("#reveal").scrollIntoView({block:"nearest"})}
+
+/* ---------- end ---------- */
+function end(s,max,mode){
+ const p=s/max,msg=p>=.85?"Population expert. Your pyramid reading is sharp.":p>=.65?"Solid work. Review the stages you missed and try again.":"Good start. Check the cheat sheet and give it another go.";
+ app.innerHTML=`<div class="card" style="text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center"><p class="mute">Final score</p><p class="big">${s}<span class="mute" style="font-size:1.5rem">/${max}</span></p><p>${msg}</p></div>
+ <button class="btn" id="again">Play again</button><button class="btn ghost" id="mn">Back to menu</button>`;
+ $("#again").onclick=mode==="match-up"?mode1:mode2;$("#mn").onclick=menu;scrollTo(0,0)}
+menu();
+</script>
+
+</body></html>
